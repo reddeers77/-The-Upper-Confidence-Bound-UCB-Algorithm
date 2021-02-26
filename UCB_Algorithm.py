@@ -45,6 +45,7 @@ time_step = 0
 clicked = [0]*4
 total_reward = 0
 rewardList= []
+rewarded = [0]*4
 chosenList = []
 operation = 200
 boxesNum = 4
@@ -60,7 +61,7 @@ for line in range(0,operation):
         if (clicked[box] > 0):
             
             exploration = math.sqrt(((math.log(time_step))/clicked[box]))*confidence_lvl
-            exploitation = boxesDF.values[line,box]
+            exploitation = rewarded[box]/clicked[box]
             ucb = (exploitation+exploration)
         
         else : 
@@ -75,6 +76,7 @@ for line in range(0,operation):
     time_step+=1
     reward = boxesDF.values[line,chosenBox]
     total_reward+=reward
+    rewarded[chosenBox]+=reward
     clicked[chosenBox]+=1
     rewardList.append(reward)
     chosenList.append(chosenBox)
